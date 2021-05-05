@@ -1,5 +1,7 @@
 package com.tng.oss.pfk.domain.fund.model;
 
+import com.tng.oss.pfk.domain.common.model.vo.AssetVolume;
+import com.tng.oss.pfk.domain.fund.model.vo.FundPurchaseInfo;
 import com.tng.oss.pfk.domain.fund.model.vo.FundType;
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
@@ -10,13 +12,14 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.*;
 
 
 @Entity
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(name = "uq_fund_name", columnNames = {"name"}),
                 @UniqueConstraint(name = "uq_fund_code", columnNames = {"code"}),
+                @UniqueConstraint(name = "uq_fund_name", columnNames = {"name"}),
         },
         indexes = {
                 @Index(name = "idx_fund_code", columnList = "code")
@@ -28,16 +31,22 @@ import java.time.LocalDate;
 @Builder
 public class Fund extends BaseEntity {
 
-    @NotBlank
-    @Column(nullable = false)
-    private String name;
-
     @Setter(AccessLevel.MODULE)
     @EqualsAndHashCode.Include
     @NotBlank
     @Pattern(regexp = "\\d{6}")
     @Column(nullable = false, updatable = false, length = 6)
     private String code;
+
+
+    @NotBlank
+    @Column(nullable = false)
+    private String name;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String fullName;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -47,20 +56,49 @@ public class Fund extends BaseEntity {
     @NotNull
     @Positive
     @Column(nullable = false, updatable = false)
-    private Long managedBy;
+    private Long companyId;
 
     @NotNull
     @Past
     @Column(nullable = false, updatable = false)
-    private LocalDate founded;
+    private LocalDate established;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String performanceBaseline;
+
+    @NotNull
+    @Embedded
+    private FundPurchaseInfo purchaseInfo;
+
+    @ElementCollection
+    private Set<AssetVolume> assetVolumes;
+
+    public void addAssetVolume(AssetVolume volume) {
+        GenericAssertions.notNull(volume, "Asset volume cannot be null!");
+        if (assetVolumes == null) {
+            this.assetVolumes = new TreeSet<>(Comparator.comparing(AssetVolume::getAsOfDate).reversed()
+                .thenComparing(AssetVolume::amount)
+                .thenComparing(AssetVolume::unit));
+        }
+        assetVolumes.add(volume);
+    }
+
+    public Set<AssetVolume> getAssetVolumes() {
+        if (assetVolumes == null || assetVolumes.isEmpty()) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(assetVolumes);
+    }
 
     public void managedBy(Long managedBy) {
         GenericAssertions.notNull(managedBy);
         Assert.isTrue(managedBy > 0, "ManagedBy company id cannot be zero or negative");
-        if (this.managedBy == null) {
-            this.managedBy = managedBy;
+        if (this.companyId == null) {
+            this.companyId = managedBy;
         }
     }
+
 
     @Valid
     public static Fund create(@NotBlank String name, @NotBlank String code, @NotNull FundType type, @NotNull @Past LocalDate founded) {
@@ -72,7 +110,7 @@ public class Fund extends BaseEntity {
                 .name(name)
                 .code(code)
                 .type(type)
-                .founded(founded)
+                .established(founded)
                 .build();
     }
 }

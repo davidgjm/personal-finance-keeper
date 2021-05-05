@@ -7,5 +7,6 @@ public enum FundType {
     EQUITY,
     BALANCED,
     INDEX,
-    ETF
+    ETF,
+    QDII
 }

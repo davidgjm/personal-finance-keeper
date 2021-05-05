@@ -34,6 +34,11 @@ public class Company extends BaseEntity {
 
     @EqualsAndHashCode.Include
     @NotBlank
+    @Column(nullable = false)
+    private String fullName;
+
+    @EqualsAndHashCode.Include
+    @NotBlank
     @Length(min = 15, max = 18)
     @Column(length = 18, nullable = false, updatable = false)
     private String code;

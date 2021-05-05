@@ -2,6 +2,7 @@ package com.tng.oss.pfk.infrastructure.core.persistence;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
@@ -14,6 +15,7 @@ public abstract class BaseEntity implements GenericEntity<Long> {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Nullable
     @Setter(AccessLevel.PROTECTED)
+    @EqualsAndHashCode.Include
     private Long id;
 
     public BaseEntity() {
