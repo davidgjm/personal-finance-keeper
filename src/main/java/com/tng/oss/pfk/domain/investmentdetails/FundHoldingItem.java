@@ -1,15 +1,13 @@
-package com.tng.oss.pfk.domain.fund.model;
+package com.tng.oss.pfk.domain.investmentdetails;
 
-import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Embeddable
 @EqualsAndHashCode
@@ -17,6 +15,13 @@ import java.time.LocalDate;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 public class FundHoldingItem {
+
+
+    @NotNull
+    @Positive
+    @Transient
+    @Setter(AccessLevel.PACKAGE)
+    private Long parentId;
 
     @NotNull
     @Positive
@@ -26,12 +31,4 @@ public class FundHoldingItem {
     @PositiveOrZero
     private BigDecimal netAssetValueRatio;
 
-    @NotNull
-    @Past
-    private LocalDate reportDate;
-
-    public void setReportDate(@NotNull @Past LocalDate reportDate) {
-        GenericAssertions.isPast(reportDate, "Report date cannot be present or future!");
-        this.reportDate = reportDate;
-    }
 }

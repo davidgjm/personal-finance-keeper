@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.domain.fund.model;
+package com.tng.oss.pfk.domain.investmentdetails;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
@@ -42,8 +42,8 @@ public class FundHoldings extends BaseEntity {
     @ElementCollection
     @CollectionTable(
             name = "FUND_HOLDING_ITEMS",
-            joinColumns = {@JoinColumn(name = "HOLDING_GROUP_ID")},
-            uniqueConstraints = @UniqueConstraint(name = "uq_group_stock", columnNames = {"HOLDING_GROUP_ID", "stockId"})
+            joinColumns = {@JoinColumn(name = "groupId")},
+            uniqueConstraints = @UniqueConstraint(name = "uq_group_stock", columnNames = {"groupId", "stockId"})
     )
     private Set<FundHoldingItem> holdingItems;
 
@@ -53,7 +53,6 @@ public class FundHoldings extends BaseEntity {
             this.holdingItems = new TreeSet<FundHoldingItem>(Comparator.comparing(FundHoldingItem::getNetAssetValueRatio).reversed())
                     ;
         }
-        holdingItem.setReportDate(reportDate);
         holdingItems.add(holdingItem);
     }
 
@@ -63,5 +62,12 @@ public class FundHoldings extends BaseEntity {
             return Collections.emptySet();
         }
         return Collections.unmodifiableSet(holdingItems);
+    }
+
+    @PostLoad
+    private void loadParent() {
+        if (!holdingItems.isEmpty()) {
+            holdingItems.forEach( i -> i.setParentId(this.getId()));
+        }
     }
 }

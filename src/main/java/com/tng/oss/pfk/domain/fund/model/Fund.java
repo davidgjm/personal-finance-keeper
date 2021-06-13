@@ -65,7 +65,7 @@ public class Fund extends BaseEntity {
 
     @NotBlank
     @Column(nullable = false)
-    private String performanceBaseline;
+    private String performanceBenchmark;
 
     @NotNull
     @Embedded
