@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.domain.management;
+package com.tng.oss.pfk.fundmanagement.domain;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import lombok.EqualsAndHashCode;
