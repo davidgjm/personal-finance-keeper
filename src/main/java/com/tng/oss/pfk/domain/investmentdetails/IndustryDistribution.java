@@ -28,15 +28,15 @@ import java.util.TreeSet;
 @Data
 @Setter(AccessLevel.NONE)
 @Builder
-public class IndustryDistribution extends BaseEntity {
+public final class IndustryDistribution extends BaseEntity {
     @NotNull
     @Positive
     @Column(nullable = false, updatable = false)
-    private final Long fundId;
+    private Long fundId;
 
     @NotNull
     @Past
-    private final LocalDate reportDate;
+    private LocalDate reportDate;
 
     @NotEmpty
     @ElementCollection

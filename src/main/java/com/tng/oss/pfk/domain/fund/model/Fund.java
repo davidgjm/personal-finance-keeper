@@ -29,7 +29,7 @@ import java.util.*;
 @Data
 @Setter(AccessLevel.NONE)
 @Builder
-public class Fund extends BaseEntity {
+public final class Fund extends BaseEntity {
 
     @Setter(AccessLevel.MODULE)
     @EqualsAndHashCode.Include

@@ -27,12 +27,12 @@ import static com.tng.oss.pfk.infrastructure.RateConstants.RETURN_RATE_SCALE;
 @Entity
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
-@Setter(AccessLevel.PRIVATE)
+@Setter(AccessLevel.PACKAGE)
 public final class FundManager extends AuditableEntity {
     @EqualsAndHashCode.Include
     @NotBlank
     @Column(nullable = false, updatable = false, length = 10)
-    private String fullName;
+    private String name;
 
     @NotNull
     @Past
@@ -40,10 +40,9 @@ public final class FundManager extends AuditableEntity {
     private LocalDate careerStarted;
 
     @PositiveOrZero
-    private Long presentCompanyId;
+    private Long companyId;
 
-    @NotNull
-    private AssetVolume presentTotalManagedAsset;
+    private AssetVolume totalManagedAsset;
 
     @NotNull
     @Column(nullable = false, precision = RETURN_RATE_PRECISION, scale = RETURN_RATE_SCALE)

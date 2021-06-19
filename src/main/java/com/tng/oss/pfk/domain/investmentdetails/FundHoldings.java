@@ -27,16 +27,16 @@ import java.util.TreeSet;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Setter(AccessLevel.NONE)
-@Builder
+@NoArgsConstructor
 public class FundHoldings extends BaseEntity {
     @NotNull
     @Positive
     @Column(nullable = false, updatable = false)
-    private final Long fundId;
+    private Long fundId;
 
     @NotNull
     @Past
-    private final LocalDate reportDate;
+    private LocalDate reportDate;
 
     @NotEmpty
     @ElementCollection

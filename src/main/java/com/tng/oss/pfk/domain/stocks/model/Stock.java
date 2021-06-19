@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Setter(AccessLevel.NONE)
-@Builder
+@NoArgsConstructor
 public class Stock extends BaseEntity {
     @NotBlank
     @Pattern(regexp = "\\d{6}")

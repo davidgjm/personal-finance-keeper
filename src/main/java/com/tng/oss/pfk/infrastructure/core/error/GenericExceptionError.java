@@ -1,5 +1,5 @@
 package com.tng.oss.pfk.infrastructure.core.error;
 
-public interface GenericExceptionError extends GenericError {
+public interface GenericExceptionError extends GenericCategorizedError {
     String getDetailedMessage();
 }

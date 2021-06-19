@@ -1,6 +1,8 @@
 package com.tng.oss.pfk.fundmanagement.domain;
 
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
+import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementError;
+import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,26 +25,38 @@ public class FundCompanyServiceImpl implements FundCompanyService {
     }
 
     @Override
-    public FundCompanyDto save(@Valid @NotNull FundCompanyDto companyDto) {
+    public FundCompanyDto create(@Valid @NotNull FundCompanyDto companyDto) {
         GenericAssertions.notNull(companyDto, "dto cannot be null");
         log.info("Attempting to create fund company: dto details: {}", companyDto);
 
         FundCompany target;
         Optional<FundCompany> companyOptional = repository.findByNameIgnoreCase(companyDto.getName());
-
-        if (companyOptional.isPresent()) {
-            target = companyOptional.get();
-            log.info("Fund company with name already exists. {}", target);
-            target.setShortName(companyDto.getShortName());
-            target.setVentureType(companyDto.getVentureType());
-            target.setRegistryLocation(companyDto.getRegistryLocation());
-            target.setOfficeLocation(companyDto.getOfficeLocation());
-        } else {
-            log.info("Creating new fund company with details: {}", companyDto);
-            target = companyDtoMapper.asModel(companyDto);
-        }
+        companyOptional.ifPresent(c -> {
+            log.error("Fund company with name already exists. {}", c.getName());
+            throw new FundManagementException(FundManagementError.COMPANY_NAME_ALREADY_EXISTS);
+        });
+        log.info("Creating new fund company with details: {}", companyDto);
+        target = companyDtoMapper.asModel(companyDto);
         log.info("Fund company to be saved. {}", target);
         return companyDtoMapper.asDto(repository.save(target));
+    }
+
+    @Override
+    public FundCompanyDto update(FundCompanyDto companyDto) {
+        GenericAssertions.notNull(companyDto, "dto cannot be null");
+        GenericAssertions.notNull(companyDto.getId(), "ID cannot be null");
+        log.info("Attempting to create fund company: dto details: {}", companyDto);
+        FundCompany company = repository.findById(companyDto.getId()).orElseThrow(() -> new FundManagementException(FundManagementError.COMPANY_NOT_FOUND));
+        if (!companyDto.getName().contentEquals(company.getName())) {
+            log.error("Provided company name is different from existing! Provided={}, existing={}", companyDto.getName(), company.getName());
+            throw new FundManagementException(FundManagementError.COMPANY_NAME_MISMATCH);
+        }
+
+        company.setShortName(companyDto.getShortName());
+        company.setVentureType(companyDto.getVentureType());
+        company.setRegistryLocation(companyDto.getRegistryLocation());
+        company.setOfficeLocation(companyDto.getOfficeLocation());
+        return companyDtoMapper.asDto(repository.save(company));
     }
 
     @Override
@@ -57,6 +71,12 @@ public class FundCompanyServiceImpl implements FundCompanyService {
     public Optional<FundCompanyDto> findById(Long companyId) {
         log.info("Attempting to find fund company: [companyId={}]", companyId);
         return repository.findById(companyId).map(companyDtoMapper::asDto);
+    }
+
+    @Override
+    public Optional<FundCompanyDto> findByName(String name) {
+        log.info("Attempting to find company by name or short name: {}", name);
+        return repository.findByNameOrShortNameIgnoreCase(name).map(companyDtoMapper::asDto);
     }
 
 }

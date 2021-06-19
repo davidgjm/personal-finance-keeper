@@ -6,12 +6,14 @@ import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Valid
 @Data
 @Builder
 public class FundCompanyDto {
+    @Positive
     private Long id;
 
     @NotBlank

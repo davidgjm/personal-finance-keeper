@@ -1,6 +1,9 @@
 package com.tng.oss.pfk.infrastructure.core.validation;
 
+import org.springframework.util.StringUtils;
+
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 
 public final class GenericAssertions {
@@ -10,13 +13,25 @@ public final class GenericAssertions {
 
     public static void notNull(Object object, String message) {
         if (null == object) {
-            throw new GenericValidationException(ValidationError.COMMON_ARGUMENT_NULL, message);
+            throw new GenericValidationException(SystemCommonError.COMMON_ARGUMENT_NULL, message);
         }
     }
 
     public static void notNull(Object object) {
         if (null == object) {
-            throw new GenericValidationException(ValidationError.COMMON_ARGUMENT_NULL);
+            throw new GenericValidationException(SystemCommonError.COMMON_ARGUMENT_NULL);
+        }
+    }
+
+    public static void isTrue(boolean condition, String message) {
+        if (!condition) {
+            throw new GenericValidationException(SystemCommonError.COMMON_CONDITION_NOT_MET, message);
+        }
+    }
+
+    public static void hasText(String input) {
+        if (!StringUtils.hasText(input)) {
+            throw new GenericValidationException(SystemCommonError.COMMON_STRING_NO_TEXT);
         }
     }
 
@@ -27,19 +42,33 @@ public final class GenericAssertions {
      */
     public static void notNegative(BigDecimal number, String message) {
         if (number == null || number.compareTo(BigDecimal.ZERO) < 0) {
-            throw new GenericValidationException(ValidationError.COMMON_NUMBER_NEGATIVE, message);
+            throw new GenericValidationException(SystemCommonError.COMMON_NUMBER_NEGATIVE, message);
+        }
+    }
+
+    public static void isPositive(Long number, String message) {
+        if (number == null || number <= 0) {
+            throw new GenericValidationException(SystemCommonError.COMMON_NUMBER_NOT_POSITIVE, message);
+        }
+    }
+
+
+
+    public static void notFuture(Instant instant, String message) {
+        if (null == instant || instant.compareTo(Instant.now()) >0 ) {
+            throw new GenericValidationException(SystemCommonError.COMMON_DATE_NOT_PAST, message);
         }
     }
 
     public static void isPast(LocalDate date, String message) {
         if (null == date || !date.isBefore(LocalDate.now())) {
-            throw new GenericValidationException(ValidationError.COMMON_DATE_NOT_PAST, message);
+            throw new GenericValidationException(SystemCommonError.COMMON_DATE_NOT_PAST, message);
         }
     }
 
-    public static void isPast(LocalDate date) {
-        if (null == date || !date.isBefore(LocalDate.now())) {
-            throw new GenericValidationException(ValidationError.COMMON_DATE_NOT_PAST);
+    public static void isPast(Instant instant) {
+        if (null == instant || !instant.isBefore(Instant.now())) {
+            throw new GenericValidationException(SystemCommonError.COMMON_DATE_NOT_PAST);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.tng.oss.pfk.domain.common.model.vo;
 
 import com.tng.oss.pfk.infrastructure.core.validation.GenericValidationException;
-import com.tng.oss.pfk.infrastructure.core.validation.ValidationError;
+import com.tng.oss.pfk.infrastructure.core.validation.SystemCommonError;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ class AssetVolumeTest {
         var exception = assertThrows(GenericValidationException.class, () ->{
             new AssetVolume(null, null);
         });
-        assertEquals(ValidationError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
+        assertEquals(SystemCommonError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
     }
 
     @Test
@@ -23,7 +23,7 @@ class AssetVolumeTest {
         var exception = assertThrows(GenericValidationException.class, () ->{
             new AssetVolume(BigDecimal.valueOf(-10), null);
         });
-        assertEquals(ValidationError.COMMON_NUMBER_NEGATIVE.getCode(), exception.getError().getCode());
+        assertEquals(SystemCommonError.COMMON_NUMBER_NEGATIVE.getCode(), exception.getError().getCode());
     }
 
     @Test
@@ -31,7 +31,7 @@ class AssetVolumeTest {
         var exception = assertThrows(GenericValidationException.class, () ->{
             new AssetVolume(BigDecimal.valueOf(10), null);
         });
-        assertEquals(ValidationError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
+        assertEquals(SystemCommonError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
     }
 
 

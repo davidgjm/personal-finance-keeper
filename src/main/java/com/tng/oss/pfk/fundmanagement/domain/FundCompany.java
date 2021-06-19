@@ -20,6 +20,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 @Setter(AccessLevel.PRIVATE)
 @Builder
 public class FundCompany extends BaseEntity {
@@ -28,7 +29,8 @@ public class FundCompany extends BaseEntity {
     @EqualsAndHashCode.Include
     @NotBlank
     @Column(nullable = false, updatable = false)
-    private final String name;
+    @Setter(AccessLevel.NONE)
+    private String name;
 
     @NotBlank
     @Column(length = 16)
@@ -43,7 +45,8 @@ public class FundCompany extends BaseEntity {
     @NotNull
     @Past
     @Column(nullable = false, updatable = false)
-    private final LocalDate established;
+    @Setter(AccessLevel.NONE)
+    private LocalDate established;
 
     @Column(length = 40)
     @Setter(AccessLevel.PACKAGE)
