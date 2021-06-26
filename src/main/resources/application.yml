@@ -1,3 +1,16 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+    include-exception: false
+    whitelabel:
+      enabled: false
+  exception-handling:
+    default-custom-exception-status: 200
+    include-http-status: true
+    http-status-mapping:
+      'javax.validation.ConstraintViolationException': 400
 spring:
   main:
 
@@ -5,3 +18,7 @@ spring:
   application:
     admin:
       enabled: true
+
+
+  jpa:
+    open-in-view: false

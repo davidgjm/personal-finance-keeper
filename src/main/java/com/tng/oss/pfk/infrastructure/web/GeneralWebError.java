@@ -2,7 +2,7 @@ package com.tng.oss.pfk.infrastructure.web;
 
 import com.tng.oss.pfk.infrastructure.core.error.GenericCategorizedError;
 
-public enum WebApiError implements GenericCategorizedError {
+public enum GeneralWebError implements GenericCategorizedError {
     ID_MISSING(1, "resource ID missing in request payload"),
     ID_MISMATCH_IN_PATH_PAYLOAD(2, "Resource ID mismatch in path variable and payload")
     ;
@@ -11,14 +11,14 @@ public enum WebApiError implements GenericCategorizedError {
     private final short sequence;
     private final String message;
 
-    WebApiError(int category, int sequence, String message) {
+    GeneralWebError(int category, int sequence, String message) {
         this.namespace = 100;
         this.category = (short) category;
         this.sequence = (short) sequence;
         this.message = message;
     }
 
-    WebApiError(int sequence, String message) {
+    GeneralWebError(int sequence, String message) {
         this(0, sequence, message);
     }
 

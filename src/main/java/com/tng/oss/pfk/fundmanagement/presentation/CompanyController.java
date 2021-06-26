@@ -8,15 +8,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import static com.tng.oss.pfk.infrastructure.web.StandardQueryParameters.PAGINATION_FIRST_PAGE;
 
-@Validated
 @Slf4j
 @RestController
 @RequestMapping("/admin/fm/companies")
+@Validated
 public class CompanyController {
     private final FundManagementService fms;
 
@@ -39,7 +40,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponsePayload<CompanyApiData> update(@Validated @PathVariable @NotNull @Positive Long id, @Validated @RequestBody @NotNull CompanyApiData requestData) {
+    public ResponsePayload<CompanyApiData> update(@Valid @PathVariable("id") @NotNull @Positive Long id, @RequestBody @NotNull CompanyApiData requestData) {
         log.info("Attempting to update fund company #{} with request data: {}", id, requestData);
         var dto = fms.update(requestData.asDto());
         validIdInPathAndRequest(id, requestData);
@@ -52,11 +53,11 @@ public class CompanyController {
         var idInData = apiData.getId();
         if (idInData == null) {
             log.error("Company Id is missing in request data");
-            throw new WebApiException(WebApiError.ID_MISSING);
+            throw new WebApiException(GeneralWebError.ID_MISSING);
         }
         if (!idInPath.equals(idInData)) {
             log.error("ID mismatch. Id in Path: {}, id in data: {}", idInPath, idInData);
-            throw new WebApiException(WebApiError.ID_MISMATCH_IN_PATH_PAYLOAD);
+            throw new WebApiException(GeneralWebError.ID_MISMATCH_IN_PATH_PAYLOAD);
         }
     }
 }

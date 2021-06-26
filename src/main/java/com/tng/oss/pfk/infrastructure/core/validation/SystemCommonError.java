@@ -17,7 +17,7 @@ public enum SystemCommonError implements GenericCategorizedError {
      */
     COMMON_STRING_NO_TEXT(1, 2, "String cannot be null/empty!"),
 
-
+    UNKNOWN_OR_SYSTEM_ERROR(255,255,255, "Unknown or system error")
     ;
 
     private final short namespace;
@@ -25,11 +25,15 @@ public enum SystemCommonError implements GenericCategorizedError {
     private final short sequence;
     private final String message;
 
-    SystemCommonError(int category, int sequence, String message) {
-        this.namespace = 0;
+    SystemCommonError(int namespace, int category, int sequence, String message) {
+        this.namespace = (short) namespace;
         this.category = (short) category;
         this.sequence = (short) sequence;
         this.message = message;
+    }
+
+    SystemCommonError(int category, int sequence, String message) {
+        this(0, category, sequence, message);
     }
 
 
