@@ -18,6 +18,8 @@ public class FundCompanyDtoMapper implements GenericDtoMapper<FundCompany, FundC
                 .established(source.getEstablished())
                 .registryLocation(source.getRegistryLocation())
                 .officeLocation(source.getOfficeLocation())
+                .created(source.getCreated())
+                .updated(source.getLastUpdated())
                 .build();
     }
 

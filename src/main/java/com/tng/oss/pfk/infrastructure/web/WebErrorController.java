@@ -20,9 +20,8 @@ public class WebErrorController extends BasicErrorController {
         this.exceptionHandlingConfig = exceptionHandlingConfig;
     }
 
-    @Override
-    @RequestMapping/*(produces = MediaType.APPLICATION_JSON_VALUE)*/
-    public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
+    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> errorJson(HttpServletRequest request) {
         HttpStatus status = getStatus(request);
         if (status == HttpStatus.NO_CONTENT) {
             return new ResponseEntity<>(status);

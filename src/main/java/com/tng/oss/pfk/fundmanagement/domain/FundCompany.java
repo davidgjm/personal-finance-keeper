@@ -1,6 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.domain;
 
-import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
+import com.tng.oss.pfk.infrastructure.core.persistence.AuditableEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
 import org.springframework.util.Assert;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter(AccessLevel.PRIVATE)
 @Builder
-public class FundCompany extends BaseEntity {
+public class FundCompany extends AuditableEntity {
 
 
     @EqualsAndHashCode.Include

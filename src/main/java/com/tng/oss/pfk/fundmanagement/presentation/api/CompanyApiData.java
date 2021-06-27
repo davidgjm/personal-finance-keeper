@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Builder
@@ -41,7 +42,8 @@ public final class CompanyApiData {
     private String registryLocation;
 
     private String officeLocation;
-
+    private Instant created;
+    private Instant updated;
 
     public FundCompanyDto asDto() {
         return FundCompanyDto.builder()
@@ -66,6 +68,8 @@ public final class CompanyApiData {
                 .established(companyDto.getEstablished())
                 .registryLocation(companyDto.getRegistryLocation())
                 .officeLocation(companyDto.getOfficeLocation())
+                .created(companyDto.getCreated())
+                .updated(companyDto.getUpdated())
                 .build();
     }
 }

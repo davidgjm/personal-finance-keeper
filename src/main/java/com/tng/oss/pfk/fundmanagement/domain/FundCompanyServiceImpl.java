@@ -45,7 +45,7 @@ public class FundCompanyServiceImpl implements FundCompanyService {
     public FundCompanyDto update(FundCompanyDto companyDto) {
         GenericAssertions.notNull(companyDto, "dto cannot be null");
         GenericAssertions.notNull(companyDto.getId(), "ID cannot be null");
-        log.info("Attempting to create fund company: dto details: {}", companyDto);
+        log.info("Attempting to update fund company: dto details: {}", companyDto);
         FundCompany company = repository.findById(companyDto.getId()).orElseThrow(() -> new FundManagementException(FundManagementError.COMPANY_NOT_FOUND));
         if (!companyDto.getName().contentEquals(company.getName())) {
             log.error("Provided company name is different from existing! Provided={}, existing={}", companyDto.getName(), company.getName());

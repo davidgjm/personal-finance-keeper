@@ -25,7 +25,7 @@ public final class WebErrorResponse<T extends Serializable> implements GenericEr
             GenericException ge = (GenericException) ex;
             output.setType(WebError.ErrorType.APPLICATION);
             output.setCode(ge.getError().getCode());
-            output.setMessage(ge.getMessage());
+            output.setMessage(ge.getError().getMessage());
             output.setExplanation(ge.getError().getDetailedMessage());
         } else {
             output.setType(WebError.ErrorType.SYSTEM);

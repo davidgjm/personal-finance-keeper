@@ -1,5 +1,7 @@
 package com.tng.oss.pfk.infrastructure.web;
 
+import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;
+import com.tng.oss.pfk.infrastructure.core.error.GenericException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,12 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public WebErrorResponse<?> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+        return translateException(ex, request);
+    }
+
+    @ExceptionHandler({FundManagementException.class})
+    @ResponseStatus(HttpStatus.OK)
+    public WebErrorResponse<?> handleAppException_OK(GenericException ex, WebRequest request) {
         return translateException(ex, request);
     }
 

@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -40,7 +39,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponsePayload<CompanyApiData> update(@Valid @PathVariable("id") @NotNull @Positive Long id, @RequestBody @NotNull CompanyApiData requestData) {
+    public ResponsePayload<CompanyApiData> update(@PathVariable("id") @NotNull @Positive Long id, @RequestBody @NotNull CompanyApiData requestData) {
         log.info("Attempting to update fund company #{} with request data: {}", id, requestData);
         var dto = fms.update(requestData.asDto());
         validIdInPathAndRequest(id, requestData);
