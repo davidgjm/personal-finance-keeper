@@ -13,7 +13,7 @@ public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundM
     @Override
     public FundManager asModel(FundManagerDto dto) {
         FundManager manager = new FundManager();
-        manager.setName(dto.getFullName());
+        manager.setName(dto.getName());
         manager.setCareerStarted(dto.getCareerStarted());
         manager.setCompanyId(dto.getCompanyId());
         manager.setTotalManagedAsset(dto.getPresentTotalManagedAsset());
@@ -29,7 +29,7 @@ public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundM
     public FundManagerDto asDto(FundManager model) {
         GenericAssertions.notNull(model);
         return FundManagerDto.builder()
-                .fullName(model.getName())
+                .name(model.getName())
                 .careerStarted(model.getCareerStarted())
                 .companyId(model.getCompanyId())
                 .presentTotalManagedAsset(model.getTotalManagedAsset())
@@ -38,6 +38,8 @@ public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundM
                 .introduction(model.getIntroduction())
                 .investingStyle(model.getInvestingStyle())
                 .comments(model.getComments().stream().map(FundManagerComment::from).collect(Collectors.toList()))
+                .created(model.getCreated())
+                .updated(model.getLastUpdated())
                 .build();
     }
 }

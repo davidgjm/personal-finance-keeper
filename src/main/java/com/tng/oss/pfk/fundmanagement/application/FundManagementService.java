@@ -1,9 +1,10 @@
 package com.tng.oss.pfk.fundmanagement.application;
 
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerComment;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -17,15 +18,17 @@ public interface FundManagementService {
 
     FundCompanyDto update(@NotNull @Valid FundCompanyDto companyDto);
 
-    Page<FundCompanyDto> findAllCompanies(@NotNull Pageable pageRequest);
+    Page<FundCompanyDto> findAllCompanies(@NotNull PageRequest pageRequest);
 
     Optional<FundCompanyDto> findCompany(@NotNull @Positive Long companyId);
 
     Optional<FundCompanyDto> findCompany(@NotBlank String name);
 
-    List<FundManagerDto> allManagers(@NotNull @Positive Long companyId);
+    Page<FundManagerDto> allManagers(PageRequest pageRequest);
 
-    Optional<FundManagerDto> manager(@NotNull @Positive Long managerId);
+    Page<FundManagerDto> allManagers(@NotNull @Positive Long companyId, PageRequest pageRequest);
+
+    FundManagerDto manager(@NotNull @Positive Long managerId);
 
     List<FundManagerDto> manager(@NotBlank String name);
 
@@ -34,7 +37,11 @@ public interface FundManagementService {
      * @param managerDto Fund manager DTO to be added
      * @return
      */
-    FundManagerDto addOrUpdateFundManager(@NotNull @Valid FundManagerDto managerDto);
+    FundManagerDto create(@NotNull @Valid FundManagerDto managerDto);
+
+    FundManagerDto update(@NotNull @Valid FundManagerDto managerDto);
+
+    List<FundManagerComment> findComments(@NotNull @Positive Long managerId);
 
     FundManagerDto commentOnFundManager(@NotBlank String comment, @NotNull @Positive Long managerId);
 }

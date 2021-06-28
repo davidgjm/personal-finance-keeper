@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder
 public class FundManagerDto {
     private Long id;
-    private String fullName;
+    private String name;
     private LocalDate careerStarted;
     private Long companyId;
     private AssetVolume presentTotalManagedAsset;
@@ -21,5 +22,6 @@ public class FundManagerDto {
     private String introduction;
     private String investingStyle;
     private List<FundManagerComment> comments;
-
+    private Instant created;
+    private Instant updated;
 }

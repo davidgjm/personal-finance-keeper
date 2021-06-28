@@ -34,7 +34,7 @@ public class FundCompany extends AuditableEntity {
 
     @NotBlank
     @Column(length = 16)
-    @Setter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.PUBLIC)
     private String shortName;
 
     @NotNull
@@ -49,14 +49,14 @@ public class FundCompany extends AuditableEntity {
     private LocalDate established;
 
     @Column(length = 40)
-    @Setter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.PUBLIC)
     private String registryLocation;
 
     @Column(length = 40)
-    @Setter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.PUBLIC)
     private String officeLocation;
 
-    void setVentureType(VentureType ventureType) {
+    public void setVentureType(VentureType ventureType) {
         Assert.notNull(ventureType, "Venture type cannot be null!");
         this.ventureType = ventureType;
     }

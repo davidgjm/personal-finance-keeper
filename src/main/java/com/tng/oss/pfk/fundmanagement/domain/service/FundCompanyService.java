@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.service;
 
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
 import org.springframework.data.domain.Page;

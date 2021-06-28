@@ -27,7 +27,7 @@ import static com.tng.oss.pfk.infrastructure.RateConstants.RETURN_RATE_SCALE;
 @Entity
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
-@Setter(AccessLevel.PACKAGE)
+@Setter(AccessLevel.PUBLIC)
 public final class FundManager extends AuditableEntity {
     @EqualsAndHashCode.Include
     @NotBlank

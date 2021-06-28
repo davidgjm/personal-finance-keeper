@@ -7,7 +7,9 @@ public enum FundManagementError implements GenericCategorizedError {
     COMPANY_NAME_ALREADY_EXISTS(1, 2, "Fund Company with the same name already exists"),
     COMPANY_NAME_MISMATCH(1, 3, "Company name mismatch"),
 
-    MANAGER_NOT_FOUND(2,1,"Fund manager not found")
+    MANAGER_NOT_FOUND(2,1,"Fund manager not found"),
+    MANAGER_ID_EXISTS(2,2,"Fund manager ID provided. Potential existing entity!"),
+    MANAGER_NAME_INCONSISTENT(2,3,"Fund manager name different from record"),
     ;
     private final short namespace;
     private final short category;
