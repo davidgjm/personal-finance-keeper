@@ -1,6 +1,7 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.dtos;
 
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
+import com.tng.oss.pfk.fundmanagement.domain.model.FundCompany;
 import com.tng.oss.pfk.infrastructure.core.GenericDtoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

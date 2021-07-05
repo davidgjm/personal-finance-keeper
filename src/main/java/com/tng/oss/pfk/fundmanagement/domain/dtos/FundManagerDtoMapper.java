@@ -1,12 +1,9 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.dtos;
 
-import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerComment;
-import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDto;
+import com.tng.oss.pfk.fundmanagement.domain.model.FundManager;
 import com.tng.oss.pfk.infrastructure.core.GenericDtoMapper;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundManagerDto> {
@@ -21,7 +18,6 @@ public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundM
         manager.setBestReturnRate(dto.getBestReturnRate());
         manager.setIntroduction(dto.getIntroduction());
         manager.setInvestingStyle(dto.getInvestingStyle());
-        dto.getComments().forEach(comment -> manager.addComment(FundManagerNote.of(comment)));
         return manager;
     }
 
@@ -37,7 +33,6 @@ public class FundManagerDtoMapper implements GenericDtoMapper<FundManager, FundM
                 .bestReturnRate(model.getBestReturnRate())
                 .introduction(model.getIntroduction())
                 .investingStyle(model.getInvestingStyle())
-                .comments(model.getComments().stream().map(FundManagerComment::from).collect(Collectors.toList()))
                 .created(model.getCreated())
                 .updated(model.getLastUpdated())
                 .build();

@@ -1,6 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.application;
 
-import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerComment;
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerCommentDto;
 import com.tng.oss.pfk.fundmanagement.domain.service.FundCompanyService;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDto;
@@ -83,19 +83,19 @@ public class FundManagementServiceImpl implements FundManagementService {
     }
 
     @Override
-    public List<FundManagerComment> findComments(Long managerId) {
+    public List<FundManagerCommentDto> findComments(Long managerId) {
         log.info("Finding comments for fund manager #{}", managerId);
         var manager = managerService.of(managerId);
         if (manager.isEmpty()) {
             return Collections.emptyList();
         }
         var comments = manager.get().getComments();
-        comments.sort(Comparator.comparing(FundManagerComment::getCommentedOn).reversed());
+        comments.sort(Comparator.comparing(FundManagerCommentDto::getCommentedOn).reversed());
         return comments;
     }
 
     @Override
-    public FundManagerDto commentOnFundManager(String comment, Long managerId) {
-        return managerService.addNote(comment, managerId);
+    public FundManagerCommentDto commentOnFundManager(String comment, Long managerId) {
+        return managerService.addComment(comment, managerId);
     }
 }

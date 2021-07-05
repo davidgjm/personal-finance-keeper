@@ -1,7 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.presentation;
 
 import com.tng.oss.pfk.fundmanagement.application.FundManagementService;
-import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerComment;
 import com.tng.oss.pfk.fundmanagement.presentation.api.ManagerApiData;
 import com.tng.oss.pfk.fundmanagement.presentation.api.ManagerCommentApiData;
 import com.tng.oss.pfk.infrastructure.web.*;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.tng.oss.pfk.infrastructure.web.StandardQueryParameters.PAGINATION_FIRST_PAGE;
 
@@ -58,18 +57,19 @@ public class ManagerController {
 
 
     @GetMapping("/{id}/comments")
-    public ResponsePayload<List<FundManagerComment>> getManagerComments(@PathVariable("id") @NotNull @Positive Long id) {
+    public ListResponsePayload<ManagerCommentApiData> getManagerComments(@PathVariable("id") @NotNull @Positive Long id) {
         log.info("Attempting to load comments for manager id: {}", id);
-        var comments = fms.findComments(id);
-        return ResponsePayload.ok(comments);
+        var comments = fms.findComments(id).stream()
+                .map(ManagerCommentApiData::from)
+                .collect(Collectors.toList());
+        return ListResponsePayload.ok(comments);
     }
 
     @PostMapping("/{id}/comments")
-    public ResponsePayload<ManagerApiData> addComments(@PathVariable("id") @NotNull @Positive Long id, @RequestBody ManagerCommentApiData apiData) {
+    public ResponsePayload<ManagerCommentApiData> addComments(@PathVariable("id") @NotNull @Positive Long id, @RequestBody ManagerCommentApiData apiData) {
         log.info("Attempting to add comment for manager id: {}. Comment details: {}", id, apiData);
-        var manager = fms.commentOnFundManager(apiData.getComment(), id);
-        //TODO: The manager comment can be a separate entity so that it's more user friendly at APIs.
-        return ResponsePayload.ok(ManagerApiData.from(manager));
+        var commentDto = fms.commentOnFundManager(apiData.getComment(), id);
+        return ResponsePayload.ok(ManagerCommentApiData.from(commentDto));
     }
 
 

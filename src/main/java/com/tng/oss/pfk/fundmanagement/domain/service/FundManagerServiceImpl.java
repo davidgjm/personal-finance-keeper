@@ -1,10 +1,12 @@
 package com.tng.oss.pfk.fundmanagement.domain.service;
 
-import com.tng.oss.pfk.fundmanagement.domain.FundManager;
-import com.tng.oss.pfk.fundmanagement.domain.FundManagerDtoMapper;
-import com.tng.oss.pfk.fundmanagement.domain.FundManagerNote;
-import com.tng.oss.pfk.fundmanagement.domain.FundManagerRepository;
+import com.tng.oss.pfk.fundmanagement.domain.model.FundManager;
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDtoMapper;
+import com.tng.oss.pfk.fundmanagement.domain.repositories.FundManagerRepository;
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerCommentDto;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDto;
+import com.tng.oss.pfk.fundmanagement.domain.model.FundManagerComment;
+import com.tng.oss.pfk.fundmanagement.domain.repositories.FundManagerCommentRepository;
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementError;
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
@@ -25,10 +27,12 @@ import java.util.stream.Collectors;
 @Validated
 public class FundManagerServiceImpl implements FundManagerService {
     private final FundManagerRepository repository;
+    private final FundManagerCommentRepository commentRepository;
     private final FundManagerDtoMapper dtoMapper;
 
-    public FundManagerServiceImpl(FundManagerRepository repository, FundManagerDtoMapper dtoMapper) {
+    public FundManagerServiceImpl(FundManagerRepository repository, FundManagerCommentRepository commentRepository, FundManagerDtoMapper dtoMapper) {
         this.repository = repository;
+        this.commentRepository = commentRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -52,7 +56,7 @@ public class FundManagerServiceImpl implements FundManagerService {
 
     @Override
     public List<FundManagerDto> of(String name) {
-        GenericAssertions.hasText(name);
+        GenericAssertions.hasText(name, "fund manager name cannot be empty!");
         log.info("Attempting to find fund manager {}", name);
         return repository.findByNameIgnoreCase(name).stream()
                 .map(dtoMapper::asDto)
@@ -102,16 +106,35 @@ public class FundManagerServiceImpl implements FundManagerService {
         return dtoMapper.asDto(manager);
     }
 
-    @Transactional
     @Override
-    public FundManagerDto addNote(String note, Long managerId) {
+    public FundManagerCommentDto addComment(String comment, Long managerId) {
         log.info("Attempting to add note to fund manager (managerId={})", managerId);
         GenericAssertions.notNull(managerId, "ManagerId cannot be null!");
         GenericAssertions.isPositive(managerId, "ManagerId invalid");
-        GenericAssertions.hasText(note);
-        var manager = repository.findById(managerId).orElseThrow(() -> new FundManagementException(FundManagementError.MANAGER_NOT_FOUND));
-        manager.addComment(FundManagerNote.of(note));
-        return dtoMapper.asDto(repository.save(manager));
+        GenericAssertions.hasText(comment, comment);
+        boolean managerExists = repository.existsById(managerId);
+        if (!managerExists) {
+            log.error("Manager ID #{} not found!", managerId);
+            throw new FundManagementException(FundManagementError.MANAGER_NOT_FOUND);
+        }
+
+        FundManagerComment commentItem = FundManagerComment.of(managerId, comment);
+        commentItem = commentRepository.save(commentItem);
+        return FundManagerCommentDto.from(commentItem);
+    }
+
+    @Override
+    public List<FundManagerCommentDto> listAllComments(Long managerId) {
+        log.info("Attempting to find all comments for manager #{}", managerId);
+        boolean managerExists = repository.existsById(managerId);
+        if (!managerExists) {
+            log.error("Manager ID #{} not found!", managerId);
+            throw new FundManagementException(FundManagementError.MANAGER_NOT_FOUND);
+        }
+
+        return commentRepository.findAllByManagerIdOrderByCommentedOnDesc(managerId).stream()
+                .map(FundManagerCommentDto::from)
+                .collect(Collectors.toList());
     }
 
 

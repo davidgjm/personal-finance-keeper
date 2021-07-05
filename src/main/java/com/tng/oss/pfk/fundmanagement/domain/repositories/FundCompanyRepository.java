@@ -1,5 +1,6 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.repositories;
 
+import com.tng.oss.pfk.fundmanagement.domain.model.FundCompany;
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseRepository;
 import org.springframework.data.jpa.repository.Query;
 

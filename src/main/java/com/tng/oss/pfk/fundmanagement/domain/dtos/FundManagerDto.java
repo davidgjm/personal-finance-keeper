@@ -21,7 +21,7 @@ public class FundManagerDto {
     private BigDecimal bestReturnRate;
     private String introduction;
     private String investingStyle;
-    private List<FundManagerComment> comments;
+    private List<FundManagerCommentDto> comments;
     private Instant created;
     private Instant updated;
 }

@@ -1,5 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.domain.service;
 
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerCommentDto;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundManagerDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,5 +78,7 @@ public interface FundManagerService {
      */
     FundManagerDto update(@NotNull @Valid FundManagerDto managerDto);
 
-    FundManagerDto addNote(@NotBlank String note, @NotNull @Positive Long managerId);
+    FundManagerCommentDto addComment(@NotBlank String note, @NotNull @Positive Long managerId);
+
+    List<FundManagerCommentDto> listAllComments(@NotNull @Positive Long managerId);
 }

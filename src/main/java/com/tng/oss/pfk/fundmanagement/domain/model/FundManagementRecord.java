@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.model;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import lombok.EqualsAndHashCode;
@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 import static com.tng.oss.pfk.infrastructure.RateConstants.RETURN_RATE_PRECISION;
 import static com.tng.oss.pfk.infrastructure.RateConstants.RETURN_RATE_SCALE;
@@ -46,10 +47,7 @@ public class FundManagementRecord extends BaseEntity {
 
     @Transient
     public Period getPeriod() {
-        if (finish == null) {
-            return start.until(LocalDate.now());
-        }
-        return start.until(finish);
+        return start.until(Objects.requireNonNullElseGet(finish, LocalDate::now));
     }
 
     @NotNull

@@ -29,7 +29,7 @@ public final class GenericAssertions {
         }
     }
 
-    public static void hasText(String input) {
+    public static void hasText(@NotBlank String comment, String input) {
         if (!StringUtils.hasText(input)) {
             throw new GenericValidationException(SystemCommonError.COMMON_STRING_NO_TEXT);
         }

@@ -1,8 +1,8 @@
 package com.tng.oss.pfk.fundmanagement.domain.service;
 
-import com.tng.oss.pfk.fundmanagement.domain.FundCompany;
-import com.tng.oss.pfk.fundmanagement.domain.FundCompanyDtoMapper;
-import com.tng.oss.pfk.fundmanagement.domain.FundCompanyRepository;
+import com.tng.oss.pfk.fundmanagement.domain.model.FundCompany;
+import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDtoMapper;
+import com.tng.oss.pfk.fundmanagement.domain.repositories.FundCompanyRepository;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementError;
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;

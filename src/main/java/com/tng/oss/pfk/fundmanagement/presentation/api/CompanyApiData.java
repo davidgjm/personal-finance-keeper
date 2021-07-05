@@ -2,7 +2,7 @@ package com.tng.oss.pfk.fundmanagement.presentation.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tng.oss.pfk.fundmanagement.domain.VentureType;
+import com.tng.oss.pfk.fundmanagement.domain.vo.VentureType;
 import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.Builder;

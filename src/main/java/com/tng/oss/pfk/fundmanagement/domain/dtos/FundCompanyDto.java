@@ -1,6 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.domain.dtos;
 
-import com.tng.oss.pfk.fundmanagement.domain.VentureType;
+import com.tng.oss.pfk.fundmanagement.domain.vo.VentureType;
 import lombok.Builder;
 import lombok.Data;
 

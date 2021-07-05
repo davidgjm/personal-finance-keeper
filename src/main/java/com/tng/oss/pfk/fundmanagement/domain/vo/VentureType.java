@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.vo;
 
 public enum VentureType {
     DOMESTIC,

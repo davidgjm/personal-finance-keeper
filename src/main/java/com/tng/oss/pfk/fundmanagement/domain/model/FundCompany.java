@@ -1,5 +1,6 @@
-package com.tng.oss.pfk.fundmanagement.domain;
+package com.tng.oss.pfk.fundmanagement.domain.model;
 
+import com.tng.oss.pfk.fundmanagement.domain.vo.VentureType;
 import com.tng.oss.pfk.infrastructure.core.persistence.AuditableEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
