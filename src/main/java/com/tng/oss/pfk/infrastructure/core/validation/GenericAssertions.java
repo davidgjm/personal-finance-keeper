@@ -2,6 +2,7 @@ package com.tng.oss.pfk.infrastructure.core.validation;
 
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;

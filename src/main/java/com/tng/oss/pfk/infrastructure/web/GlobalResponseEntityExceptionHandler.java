@@ -2,6 +2,7 @@ package com.tng.oss.pfk.infrastructure.web;
 
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;
 import com.tng.oss.pfk.infrastructure.core.error.GenericException;
+import com.tng.oss.pfk.stocks.StockInfoException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
         return translateException(ex, request);
     }
 
-    @ExceptionHandler({FundManagementException.class})
+    @ExceptionHandler({FundManagementException.class, StockInfoException.class})
     @ResponseStatus(HttpStatus.OK)
     public WebErrorResponse<?> handleAppException_OK(GenericException ex, WebRequest request) {
         return translateException(ex, request);

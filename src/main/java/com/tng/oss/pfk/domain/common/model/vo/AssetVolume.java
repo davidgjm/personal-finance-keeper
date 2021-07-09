@@ -36,7 +36,7 @@ public final class AssetVolume {
     @PastOrPresent
     @Getter
     @Column(nullable = false, updatable = false)
-    private LocalDate asOfDate;
+    private LocalDate reportDate;
 
 
     AssetVolume(@NotNull @Positive BigDecimal assetVolume, @NotNull AssetVolumeUnit volumeUnit) {

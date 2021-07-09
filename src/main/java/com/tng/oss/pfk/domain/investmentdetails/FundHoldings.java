@@ -1,6 +1,7 @@
 package com.tng.oss.pfk.domain.investmentdetails;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
+import com.tng.oss.pfk.infrastructure.core.persistence.GenericPeriodicInfoEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
 
@@ -18,17 +19,17 @@ import java.util.TreeSet;
 @Entity
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(name = "uq_fund_date", columnNames = {"fundId", "reportDate"}),
+                @UniqueConstraint(name = "uq_fund_holdings_fund_date", columnNames = {"fundId", "recordDate"}),
         },
         indexes = {
-                @Index(name = "idx_report_date", columnList = "reportDate")
+                @Index(name = "idx_record_date", columnList = "recordDate")
         }
 )
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
-public class FundHoldings extends BaseEntity {
+public class FundHoldings extends BaseEntity implements GenericPeriodicInfoEntity {
     @NotNull
     @Positive
     @Column(nullable = false, updatable = false)
@@ -36,7 +37,10 @@ public class FundHoldings extends BaseEntity {
 
     @NotNull
     @Past
-    private LocalDate reportDate;
+    @Column(nullable = false, updatable = false)
+    @Setter(value = AccessLevel.PROTECTED)
+    private LocalDate recordDate;
+
 
     @NotEmpty
     @ElementCollection

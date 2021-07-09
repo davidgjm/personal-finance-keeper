@@ -1,6 +1,7 @@
 package com.tng.oss.pfk.infrastructure.core.validation;
 
 import com.tng.oss.pfk.infrastructure.core.error.GenericCategorizedError;
+import com.tng.oss.pfk.infrastructure.core.error.GenericErrorUtil;
 
 import javax.validation.constraints.PositiveOrZero;
 
@@ -26,6 +27,9 @@ public enum SystemCommonError implements GenericCategorizedError {
     private final String message;
 
     SystemCommonError(int namespace, int category, int sequence, String message) {
+        GenericErrorUtil.validateInternalCode(namespace);
+        GenericErrorUtil.validateInternalCode(category);
+        GenericErrorUtil.validateInternalCode(sequence);
         this.namespace = (short) namespace;
         this.category = (short) category;
         this.sequence = (short) sequence;

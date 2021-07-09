@@ -1,6 +1,7 @@
 package com.tng.oss.pfk.fundmanagement.domain.model;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ import static com.tng.oss.pfk.infrastructure.RateConstants.RETURN_RATE_SCALE;
         },
         indexes = {@Index(name = "idx_return_rate", columnList = "returnRate")}
 )
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class FundManagementRecord extends BaseEntity {
     @NotNull
@@ -35,7 +37,7 @@ public class FundManagementRecord extends BaseEntity {
     @Positive
     @Column(nullable = false, updatable = false)
     @EqualsAndHashCode.Include
-    private Long ManagerId;
+    private Long managerId;
 
     @NotNull
     @Past

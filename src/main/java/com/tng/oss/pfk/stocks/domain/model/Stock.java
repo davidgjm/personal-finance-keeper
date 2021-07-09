@@ -1,11 +1,11 @@
-package com.tng.oss.pfk.domain.stocks.model;
+package com.tng.oss.pfk.stocks.domain.model;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -23,7 +23,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class Stock extends BaseEntity {
     @NotBlank
-    @Pattern(regexp = "\\d{6}")
     @Column(nullable = false, updatable = false)
     private String code;
 
@@ -31,7 +30,9 @@ public class Stock extends BaseEntity {
     @Column(nullable = false, length = 64)
     private String name;
 
-    private String industry;
+    @NotNull
+    @ManyToOne(optional = false)
+    private Industry industry;
 
     private String description;
 }

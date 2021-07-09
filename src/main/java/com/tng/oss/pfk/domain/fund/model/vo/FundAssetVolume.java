@@ -28,10 +28,10 @@ public final class FundAssetVolume implements Comparable<FundAssetVolume> {
     @Past
     @Column(nullable = false, updatable = false)
     @EqualsAndHashCode.Include
-    private LocalDate asOfDate;
+    private LocalDate reportDate;
 
     @Override
     public int compareTo(FundAssetVolume o) {
-        return asOfDate.compareTo(o.asOfDate) * -1;
+        return reportDate.compareTo(o.reportDate) * -1;
     }
 }
