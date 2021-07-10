@@ -1,6 +1,7 @@
 package com.tng.oss.pfk.stocks.domain.dto;
 
 import com.tng.oss.pfk.stocks.domain.model.Industry;
+import com.tng.oss.pfk.stocks.domain.vo.IndustryInfoPublisher;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ import java.util.List;
 public final class IndustryDto {
     private Long id;
 
+    private IndustryInfoPublisher publisher;
+
     @NotBlank
     private String code;
 
@@ -25,6 +28,7 @@ public final class IndustryDto {
     private String name;
 
     private IndustryDto parent;
+    private String description;
 
     @Setter(value = AccessLevel.NONE)
     private String expandedName;
@@ -50,8 +54,10 @@ public final class IndustryDto {
     public static IndustryDto from(@NotNull Industry industry) {
         IndustryDto dto = IndustryDto.builder()
                 .id(industry.getId())
+                .publisher(industry.getPublisher())
                 .code(industry.getCode())
                 .name(industry.getName())
+                .description(industry.getDescription())
                 .build();
         if (industry.getParent() != null) {
             dto.parent = IndustryDto.from(industry.getParent());

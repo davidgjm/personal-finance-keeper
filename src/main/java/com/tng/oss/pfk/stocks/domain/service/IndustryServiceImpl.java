@@ -65,7 +65,7 @@ public class IndustryServiceImpl implements IndustryService {
     public List<IndustryDto> findIndustriesByParentId(Long parentId, Sort sort) {
         log.info("Attempting to find industries with parent #{} in order {}", parentId, sort);
 
-        return repository.findByParentIdNotNull(parentId, sort).stream()
+        return repository.findByParentId(parentId, sort).stream()
                 .map(IndustryDto::from)
                 .collect(Collectors.toList());
     }

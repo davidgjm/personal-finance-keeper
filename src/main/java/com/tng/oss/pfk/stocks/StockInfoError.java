@@ -4,8 +4,8 @@ import com.tng.oss.pfk.infrastructure.core.error.GenericCategorizedError;
 import com.tng.oss.pfk.infrastructure.core.error.GenericErrorUtil;
 
 public enum StockInfoError implements GenericCategorizedError {
-    INDUSTRY_CODE_NAME_CONFLICTS(0, 0, "Industry code/name conflicts with another"),
-    INDUSTRY_SELF_AS_PARENT(0, 1, "Industry cannot be its own parent!"),
+    INDUSTRY_PARENT_PUBLISHER_CONFLICTS(0, 0, "Industry publisher field conflicts with its parent"),
+    INDUSTRY_PARENT_SELF(0, 1, "Industry cannot be its own parent!"),
     INDUSTRY_CODE_ALREADY_EXISTS(0, 2, "Industry code already exists!"),
     INDUSTRY_NOT_FOUND(0, 2, "Industry does not exist!"),
 
