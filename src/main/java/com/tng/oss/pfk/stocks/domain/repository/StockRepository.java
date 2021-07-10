@@ -6,5 +6,5 @@ import com.tng.oss.pfk.infrastructure.core.persistence.BaseRepository;
 import java.util.Optional;
 
 public interface StockRepository extends BaseRepository<Stock> {
-    Optional<Stock> findByCode(String code);
+    Optional<Stock> findByCodeIgnoreCase(String code);
 }

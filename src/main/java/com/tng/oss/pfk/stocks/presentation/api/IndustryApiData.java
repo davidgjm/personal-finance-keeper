@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.stocks.presentation;
+package com.tng.oss.pfk.stocks.presentation.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

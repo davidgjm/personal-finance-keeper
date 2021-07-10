@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Builder
 @Data
@@ -19,7 +20,8 @@ public final class StockDto {
     private String name;
 
     @NotNull
-    private IndustryDto industry;
+    @Positive
+    private Long industryId;
 
     private String description;
 
@@ -29,7 +31,7 @@ public final class StockDto {
                 .code(stock.getCode())
                 .name(stock.getName())
                 .description(stock.getDescription())
-                .industry(IndustryDto.from(stock.getIndustry()))
+                .industryId(stock.getIndustryId())
                 .build();
     }
 }

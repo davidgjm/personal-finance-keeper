@@ -1,6 +1,9 @@
 package com.tng.oss.pfk.stocks.application;
 
 import com.tng.oss.pfk.stocks.domain.dto.IndustryDto;
+import com.tng.oss.pfk.stocks.domain.dto.StockDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,5 +18,9 @@ public interface StockInformationService {
     List<IndustryDto> findTopLevelIndustries();
 
     List<IndustryDto> findIndustriesByParentId(@NotNull @Positive Long parentId);
+
+    Page<StockDto> findAllStocks(@NotNull PageRequest pageRequest);
+
+    StockDto newStock(@NotBlank String code, @NotBlank String name, @NotNull @Positive Long industryId, String description);
 
 }

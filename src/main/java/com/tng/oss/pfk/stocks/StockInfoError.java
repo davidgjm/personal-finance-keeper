@@ -10,7 +10,10 @@ public enum StockInfoError implements GenericCategorizedError {
     INDUSTRY_NOT_FOUND(0, 2, "Industry does not exist!"),
 
 
-    STOCK_NOT_FOUND(1,0, "Stock code not found!")
+    STOCK_NOT_FOUND(1,0, "Stock code not found!"),
+    STOCK_CODE_ALREADY_EXISTS(1,1, "Stock code already exists!")
+
+    ,
     ;
     private final short namespace;
     private final short category;

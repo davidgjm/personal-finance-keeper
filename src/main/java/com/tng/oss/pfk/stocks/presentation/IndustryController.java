@@ -4,6 +4,7 @@ import com.tng.oss.pfk.infrastructure.web.ListResponsePayload;
 import com.tng.oss.pfk.infrastructure.web.ResponsePayload;
 import com.tng.oss.pfk.stocks.application.StockInformationService;
 import com.tng.oss.pfk.stocks.domain.dto.IndustryDto;
+import com.tng.oss.pfk.stocks.presentation.api.IndustryApiData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
