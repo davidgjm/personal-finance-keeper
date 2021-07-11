@@ -1,6 +1,5 @@
 package com.tng.oss.pfk.fundmanagement.domain.dtos;
 
-import com.tng.oss.pfk.fundmanagement.domain.dtos.FundCompanyDto;
 import com.tng.oss.pfk.fundmanagement.domain.model.FundCompany;
 import com.tng.oss.pfk.infrastructure.core.GenericDtoMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +13,10 @@ public class FundCompanyDtoMapper implements GenericDtoMapper<FundCompany, FundC
         return FundCompanyDto.builder()
                 .id(source.getId())
                 .name(source.getName())
-                .shortName(source.getShortName())
+                .fullName(source.getFullName())
                 .ventureType(source.getVentureType())
                 .established(source.getEstablished())
-                .registryLocation(source.getRegistryLocation())
+                .registeredLocation(source.getRegisteredLocation())
                 .officeLocation(source.getOfficeLocation())
                 .created(source.getCreated())
                 .updated(source.getLastUpdated())
@@ -26,6 +25,6 @@ public class FundCompanyDtoMapper implements GenericDtoMapper<FundCompany, FundC
 
     @Override
     public FundCompany asModel(FundCompanyDto dto) {
-        return FundCompany.of(dto.getName(), dto.getShortName(), dto.getVentureType(), dto.getEstablished(), dto.getRegistryLocation(), dto.getOfficeLocation());
+        return FundCompany.create(dto.getName(), dto.getFullName(), dto.getVentureType(), dto.getEstablished(), dto.getRegisteredLocation(), dto.getOfficeLocation());
     }
 }

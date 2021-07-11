@@ -20,10 +20,10 @@ public class FundCompanyDto {
     @NotBlank
     private String name;
 
-    private String shortName;
+    private String fullName;
     private VentureType ventureType;
     private LocalDate established;
-    private String registryLocation;
+    private String registeredLocation;
     private String officeLocation;
     private Instant created;
     private Instant updated;

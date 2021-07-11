@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.domain.fund.model.vo;
+package com.tng.oss.pfk.fund.domain.model.vo;
 
 import com.tng.oss.pfk.domain.common.model.vo.AssetVolume;
 import lombok.AccessLevel;

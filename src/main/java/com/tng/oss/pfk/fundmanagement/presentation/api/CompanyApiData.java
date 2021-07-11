@@ -28,7 +28,7 @@ public final class CompanyApiData {
 
     @NotBlank
     @JsonProperty(required = true)
-    private String shortName;
+    private String fullName;
 
     @NotNull
     @JsonProperty(required = true)
@@ -39,7 +39,7 @@ public final class CompanyApiData {
     @JsonProperty(required = true)
     private LocalDate established;
 
-    private String registryLocation;
+    private String registeredLocation;
 
     private String officeLocation;
     private Instant created;
@@ -49,10 +49,10 @@ public final class CompanyApiData {
         return FundCompanyDto.builder()
                 .id(id)
                 .name(name)
-                .shortName(shortName)
+                .fullName(fullName)
                 .ventureType(VentureType.valueOf(type.name()))
                 .established(established)
-                .registryLocation(registryLocation)
+                .registeredLocation(registeredLocation)
                 .officeLocation(officeLocation)
                 .build()
                 ;
@@ -63,10 +63,10 @@ public final class CompanyApiData {
         return CompanyApiData.builder()
                 .id(companyDto.getId())
                 .name(companyDto.getName())
-                .shortName(companyDto.getShortName())
+                .fullName(companyDto.getFullName())
                 .type(CompanyType.valueOf(companyDto.getVentureType().name()))
                 .established(companyDto.getEstablished())
-                .registryLocation(companyDto.getRegistryLocation())
+                .registeredLocation(companyDto.getRegisteredLocation())
                 .officeLocation(companyDto.getOfficeLocation())
                 .created(companyDto.getCreated())
                 .updated(companyDto.getUpdated())

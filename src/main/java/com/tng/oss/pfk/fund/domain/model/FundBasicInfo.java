@@ -1,8 +1,8 @@
-package com.tng.oss.pfk.domain.fund.model;
+package com.tng.oss.pfk.fund.domain.model;
 
-import com.tng.oss.pfk.domain.fund.dto.FundDto;
-import com.tng.oss.pfk.domain.fund.model.vo.FundPurchaseInfo;
-import com.tng.oss.pfk.domain.fund.model.vo.FundType;
+import com.tng.oss.pfk.fund.domain.dto.FundBasicsDto;
+import com.tng.oss.pfk.fund.domain.model.vo.FundPurchaseInfo;
+import com.tng.oss.pfk.fund.domain.model.vo.FundType;
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
@@ -94,9 +94,9 @@ public final class FundBasicInfo extends BaseEntity {
         this.performanceBenchmark = performanceBenchmark;
     }
 
-    public static FundBasicInfo newFund(@NotNull @Valid FundDto dto) {
+    public static FundBasicInfo newFund(@NotNull @Valid FundBasicsDto dto) {
         FundBasicInfo fund = new FundBasicInfo(dto.getCompanyId(), dto.getCode(),dto.getName(),dto.getType(), dto.getFullName(), dto.getEstablished(), dto.getPerformanceBenchmark());
-        fund.setPurchaseInfo(dto.getPurchaseInfo());
+        fund.setPurchaseInfo(dto.getPurchaseInfo().asValueObject());
         return fund;
     }
 }

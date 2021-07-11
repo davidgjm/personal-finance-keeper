@@ -1,4 +1,4 @@
-package com.tng.oss.pfk.domain.fund.model.vo;
+package com.tng.oss.pfk.fund.domain.model.vo;
 
 public enum FundType {
     MONEY_MARKET,

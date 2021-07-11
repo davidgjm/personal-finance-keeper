@@ -54,10 +54,10 @@ public class FundCompanyServiceImpl implements FundCompanyService {
             log.error("Provided company name is different from existing! Provided={}, existing={}", companyDto.getName(), company.getName());
             throw new FundManagementException(FundManagementError.COMPANY_NAME_MISMATCH);
         }
-
-        company.setShortName(companyDto.getShortName());
+        company.setEstablished(companyDto.getEstablished());
+        company.setFullName(companyDto.getFullName());
         company.setVentureType(companyDto.getVentureType());
-        company.setRegistryLocation(companyDto.getRegistryLocation());
+        company.setRegisteredLocation(companyDto.getRegisteredLocation());
         company.setOfficeLocation(companyDto.getOfficeLocation());
         return companyDtoMapper.asDto(repository.save(company));
     }
@@ -79,7 +79,7 @@ public class FundCompanyServiceImpl implements FundCompanyService {
     @Override
     public Optional<FundCompanyDto> findByName(String name) {
         log.info("Attempting to find company by name or short name: {}", name);
-        return repository.findByNameOrShortNameIgnoreCase(name).map(companyDtoMapper::asDto);
+        return repository.findByNameOrFullNameIgnoreCase(name).map(companyDtoMapper::asDto);
     }
 
 }

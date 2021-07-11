@@ -5,6 +5,7 @@ import com.tng.oss.pfk.infrastructure.core.persistence.AuditableEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,60 +24,70 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
 @Setter(AccessLevel.PRIVATE)
-@Builder
 public class FundCompany extends AuditableEntity {
 
 
-    @EqualsAndHashCode.Include
     @NotBlank
     @Column(nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     private String name;
 
+    @EqualsAndHashCode.Include
     @NotBlank
     @Column(length = 16)
-    @Setter(AccessLevel.PUBLIC)
-    private String shortName;
+    private String fullName;
 
     @NotNull
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private VentureType ventureType;
 
-    @NotNull
     @Past
-    @Column(nullable = false, updatable = false)
-    @Setter(AccessLevel.NONE)
     private LocalDate established;
 
     @Column(length = 40)
-    @Setter(AccessLevel.PUBLIC)
-    private String registryLocation;
+    private String registeredLocation;
 
     @Column(length = 40)
-    @Setter(AccessLevel.PUBLIC)
     private String officeLocation;
+
+    public void setFullName(String fullName) {
+        if (StringUtils.hasText(fullName)) {
+            this.fullName = fullName;
+        }
+    }
 
     public void setVentureType(VentureType ventureType) {
         Assert.notNull(ventureType, "Venture type cannot be null!");
         this.ventureType = ventureType;
     }
 
-    @PreUpdate
-    @PrePersist
-    private void setDefault() {
-        if (ventureType == null) {
-            this.ventureType = VentureType.DOMESTIC;
+    public void setEstablished(LocalDate established) {
+        if (this.established != null) {
+            return;
+        }
+        GenericAssertions.isPast(established, "Established date cannot be present or future!");
+        this.established = established;
+    }
+
+    public void setRegisteredLocation(String registeredLocation) {
+        if (StringUtils.hasText(registeredLocation)) {
+            this.registeredLocation = registeredLocation;
         }
     }
 
+    public void setOfficeLocation(String officeLocation) {
+        if (StringUtils.hasText(officeLocation)) {
+            this.officeLocation = officeLocation;
+        }
+    }
 
-    public static FundCompany of(@NotBlank String name, String shortName, VentureType ventureType,
-                                 @NotNull @Past LocalDate established,
-                                 String registryLocation,
-                                 String officeLocation) {
+    public static FundCompany create(@NotBlank String name, String fullName, VentureType ventureType,
+                                     @NotNull @Past LocalDate established,
+                                     String registryLocation,
+                                     String officeLocation) {
         Assert.hasText(name, "Company name is required!");
         GenericAssertions.isPast(established, "Established date cannot be present or future");
-        return new FundCompany(name, shortName, ventureType, established, registryLocation, officeLocation);
+        return new FundCompany(name, fullName, ventureType, established, registryLocation, officeLocation);
     }
 }

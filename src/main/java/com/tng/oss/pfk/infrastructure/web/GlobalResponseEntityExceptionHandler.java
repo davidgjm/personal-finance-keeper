@@ -1,5 +1,6 @@
 package com.tng.oss.pfk.infrastructure.web;
 
+import com.tng.oss.pfk.fund.FundInfoException;
 import com.tng.oss.pfk.fundmanagement.infrastructure.FundManagementException;
 import com.tng.oss.pfk.infrastructure.core.error.GenericException;
 import com.tng.oss.pfk.stocks.StockInfoException;
@@ -32,7 +33,8 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
         return translateException(ex, request);
     }
 
-    @ExceptionHandler({FundManagementException.class, StockInfoException.class})
+    @ExceptionHandler({FundManagementException.class, StockInfoException.class,
+            FundInfoException.class})
     @ResponseStatus(HttpStatus.OK)
     public WebErrorResponse<?> handleAppException_OK(GenericException ex, WebRequest request) {
         return translateException(ex, request);
