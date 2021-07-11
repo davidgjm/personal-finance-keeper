@@ -1,7 +1,11 @@
-package com.tng.oss.pfk.domain.common.model.vo;
+package com.tng.oss.pfk.infrastructure;
 
-public enum AssetVolumeUnit {
+public enum VolumeUnit {
+    /**
+     * Million
+     */
     MILLION,
+
     /**
      * 亿
      */

@@ -1,6 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.domain.model;
 
-import com.tng.oss.pfk.domain.common.model.vo.AssetVolume;
+import com.tng.oss.pfk.domain.common.model.vo.FlexibleLargeVolume;
 import com.tng.oss.pfk.infrastructure.core.persistence.AuditableEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -37,7 +37,7 @@ public final class FundManager extends AuditableEntity {
     @PositiveOrZero
     private Long companyId;
 
-    private AssetVolume totalManagedAsset;
+    private FlexibleLargeVolume totalManagedAsset;
 
     @NotNull
     @Column(nullable = false, precision = RETURN_RATE_PRECISION, scale = RETURN_RATE_SCALE)

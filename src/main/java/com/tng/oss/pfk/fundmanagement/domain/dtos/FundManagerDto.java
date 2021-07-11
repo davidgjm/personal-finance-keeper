@@ -1,6 +1,6 @@
 package com.tng.oss.pfk.fundmanagement.domain.dtos;
 
-import com.tng.oss.pfk.domain.common.model.vo.AssetVolume;
+import com.tng.oss.pfk.domain.common.model.vo.FlexibleLargeVolume;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class FundManagerDto {
     private String name;
     private LocalDate careerStarted;
     private Long companyId;
-    private AssetVolume presentTotalManagedAsset;
+    private FlexibleLargeVolume presentTotalManagedAsset;
     private BigDecimal annualReturnRate;
     private BigDecimal bestReturnRate;
     private String introduction;

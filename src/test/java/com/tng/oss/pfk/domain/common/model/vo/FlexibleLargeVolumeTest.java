@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AssetVolumeTest {
+class FlexibleLargeVolumeTest {
 
     @Test
     void test_null() {
         var exception = assertThrows(GenericValidationException.class, () ->{
-            new AssetVolume(null, null);
+            new FlexibleLargeVolume(null, null);
         });
         assertEquals(SystemCommonError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
     }
@@ -21,7 +21,7 @@ class AssetVolumeTest {
     @Test
     void test_negative() {
         var exception = assertThrows(GenericValidationException.class, () ->{
-            new AssetVolume(BigDecimal.valueOf(-10), null);
+            new FlexibleLargeVolume(BigDecimal.valueOf(-10), null);
         });
         assertEquals(SystemCommonError.COMMON_NUMBER_NEGATIVE.getCode(), exception.getError().getCode());
     }
@@ -29,7 +29,7 @@ class AssetVolumeTest {
     @Test
     void test_null_volume() {
         var exception = assertThrows(GenericValidationException.class, () ->{
-            new AssetVolume(BigDecimal.valueOf(10), null);
+            new FlexibleLargeVolume(BigDecimal.valueOf(10), null);
         });
         assertEquals(SystemCommonError.COMMON_ARGUMENT_NULL.getCode(), exception.getError().getCode());
     }
@@ -37,8 +37,8 @@ class AssetVolumeTest {
 
     @Test
     void test_billion() {
-        var volume = AssetVolume.ofBillion(BigDecimal.valueOf(1234.123456));
-        var amount = volume.amount();
+        var volume = FlexibleLargeVolume.ofBillion(BigDecimal.valueOf(1234.123456));
+        var amount = volume.getVolume();
         System.out.printf("Volume scale=%d, precision=%d%n", amount.scale(), amount.precision());
         assertTrue(amount.scale() <=6);
         assertTrue(amount.precision() <= 10);
@@ -46,8 +46,8 @@ class AssetVolumeTest {
 
     @Test
     void test_value_copy() {
-        var volume = AssetVolume.ofBillion(BigDecimal.valueOf(1234.123456));
-        var amount = volume.amount();
+        var volume = FlexibleLargeVolume.ofBillion(BigDecimal.valueOf(1234.123456));
+        var amount = volume.getVolume();
         var updated = amount.add(BigDecimal.ONE);
         assertNotSame(amount, updated);
     }

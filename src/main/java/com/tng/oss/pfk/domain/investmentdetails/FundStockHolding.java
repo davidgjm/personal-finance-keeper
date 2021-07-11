@@ -1,7 +1,6 @@
 package com.tng.oss.pfk.domain.investmentdetails;
 
 import com.tng.oss.pfk.infrastructure.core.persistence.BaseEntity;
-import com.tng.oss.pfk.infrastructure.core.persistence.GenericPeriodicInfoEntity;
 import com.tng.oss.pfk.infrastructure.core.validation.GenericAssertions;
 import lombok.*;
 
@@ -29,7 +28,7 @@ import java.util.TreeSet;
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
-public class FundHoldings extends BaseEntity implements GenericPeriodicInfoEntity {
+public class FundStockHolding extends BaseEntity{
     @NotNull
     @Positive
     @Column(nullable = false, updatable = false)
@@ -49,29 +48,29 @@ public class FundHoldings extends BaseEntity implements GenericPeriodicInfoEntit
             joinColumns = {@JoinColumn(name = "groupId")},
             uniqueConstraints = @UniqueConstraint(name = "uq_group_stock", columnNames = {"groupId", "stockId"})
     )
-    private Set<FundHoldingItem> holdingItems;
+    private Set<FundHoldingItem> stockHoldingItems;
 
-    public void addHoldingItem(@NotNull FundHoldingItem holdingItem) {
+    public void addStockHoldingItem(@NotNull FundHoldingItem holdingItem) {
         GenericAssertions.notNull(holdingItem, "Fund holding item cannot be null!");
-        if (holdingItems == null) {
-            this.holdingItems = new TreeSet<FundHoldingItem>(Comparator.comparing(FundHoldingItem::getNetAssetValueRatio).reversed())
+        if (stockHoldingItems == null) {
+            this.stockHoldingItems = new TreeSet<FundHoldingItem>(Comparator.comparing(FundHoldingItem::getNetAssetValueRatio).reversed())
                     ;
         }
-        holdingItems.add(holdingItem);
+        stockHoldingItems.add(holdingItem);
     }
 
 
-    public Set<FundHoldingItem> getHoldingItems() {
-        if (holdingItems == null || holdingItems.isEmpty()) {
+    public Set<FundHoldingItem> getStockHoldingItems() {
+        if (stockHoldingItems == null || stockHoldingItems.isEmpty()) {
             return Collections.emptySet();
         }
-        return Collections.unmodifiableSet(holdingItems);
+        return Collections.unmodifiableSet(stockHoldingItems);
     }
 
     @PostLoad
     private void loadParent() {
-        if (!holdingItems.isEmpty()) {
-            holdingItems.forEach( i -> i.setParentId(this.getId()));
+        if (!stockHoldingItems.isEmpty()) {
+            stockHoldingItems.forEach(i -> i.setParentId(this.getId()));
         }
     }
 }
