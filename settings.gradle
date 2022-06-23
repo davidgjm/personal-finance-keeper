@@ -1,1 +1,9 @@
-rootProject.name = 'personal-finance-keeper'
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+
+}
+rootProject.name = applicationName
+include 'application'
+include 'core'
+include 'core-data'
+

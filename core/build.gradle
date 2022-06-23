@@ -1,0 +1,7 @@
+plugins {
+    id 'cloud.library-conventions'
+}
+
+dependencies {
+    implementation 'org.springframework:spring-web'
+}
