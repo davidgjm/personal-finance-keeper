@@ -6,4 +6,5 @@ rootProject.name = applicationName
 include 'application'
 include 'core'
 include 'core-data'
+include 'sandbox-reactive-app'
 

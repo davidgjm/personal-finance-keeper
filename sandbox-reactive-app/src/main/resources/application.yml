@@ -1,0 +1,27 @@
+spring:
+  main:
+    web-application-type: REACTIVE
+#  sql:
+#    init:
+#      mode: always
+#      platform: postgresql
+#  datasource:
+#    url: jdbc:postgresql://localhost/pfk
+#    username: david
+#  r2dbc:
+#    url: r2dbc:postgresql://localhost/pfk
+#    username: david
+#  liquibase:
+#    url: jdbc:postgresql://localhost/pfk
+#    username: david
+
+logging.level:
+  liquibase: DEBUG
+  org:
+    springframework:
+      boot:
+        autoconfigure:
+          liquibase: DEBUG
+      r2db: DEBUG
+
+      data: TRACE

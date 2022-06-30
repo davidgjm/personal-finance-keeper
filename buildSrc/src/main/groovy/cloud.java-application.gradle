@@ -4,3 +4,9 @@ plugins {
     id "com.gorylenko.gradle-git-properties"
     id 'org.springframework.boot' apply true
 }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+}
