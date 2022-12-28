@@ -12,8 +12,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     //database
-    implementation "io.r2dbc:r2dbc-postgresql"
-	runtimeOnly 'org.postgresql:postgresql'
+//    implementation "io.r2dbc:r2dbc-postgresql"
+//	runtimeOnly 'org.postgresql:postgresql'
 
     //liquibase
     implementation "org.liquibase:liquibase-core"
