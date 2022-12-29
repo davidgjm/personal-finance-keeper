@@ -4,8 +4,8 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = "${sourceCompatibility}"
+    targetCompatibility = "${targetCompatibility}"
 }
 configurations.all {
     exclude group: 'org.apache.logging.log4j'
